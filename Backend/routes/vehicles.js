@@ -104,4 +104,33 @@ router.post('/:plateid', async (req, res) => {
     }
   });
 
+  router.patch('/change', async (req, res) => {
+    try {
+      const { plateNumber, slot } = req.body;
+  
+      if (!plateNumber || !slot) {
+        return res.status(400).json({ message: "Missing Details" });
+      }
+  
+      const vehicle = await Vehicle.findOne({ plateNumber, status: "Active" });
+  
+      if (!vehicle) {
+        return res.status(404).json({ message: "Vehicle Not Found" });
+      }
+  
+      if (vehicle.slot === slot) {
+        return res.status(200).json({ message: "Vehicle Parked at Correct Place" });
+      }
+  
+      vehicle.slot = slot;
+      await vehicle.save();
+  
+      return res.status(200).json({ message: "Vehicle Slot Updated Successfully" });
+    } catch (err) {
+      console.error('Error updating vehicle:', err);
+      return res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+
 export default router;

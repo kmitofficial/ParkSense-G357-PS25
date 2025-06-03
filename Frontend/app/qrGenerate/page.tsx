@@ -174,7 +174,6 @@ const LatestQR: React.FC = () => {
                     Scan the QR code to get directions to your assigned parking slot.
                   </CardDescription>
                 </div>
-                <CountdownTimer />
               </div>
             </CardHeader>
             <CardContent className="flex flex-col items-center">
